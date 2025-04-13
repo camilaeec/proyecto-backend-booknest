@@ -1,5 +1,8 @@
 package com.example.booknest.book.domain;
 
+import com.example.booknest.transaction.domain.Transaction;
+import com.example.booknest.user.domain.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +10,7 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
+@Table(name="users")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +18,17 @@ public class Book {
     private String title;
     private String author;
     private String publisher;
-    private String year_of_publication;
+    private String yearOfPublication;
     private String state;
     private String price;
     private Boolean exchange;
-    //falta agregar el id del usuario que publica el libro
+
+    @ManyToOne
+    @JoinColumn(name= "id_user")
+    @JsonBackReference
+    private User user;
+
+    @OneToOne(mappedBy = "book")
+    @JsonBackReference
+    private Transaction transaction;
 }
