@@ -51,11 +51,11 @@ public class User {
     @JsonManagedReference
     private List<Transaction> sales;
 
-    @OneToMany(mappedBy = "reviewer")
+    @OneToMany(mappedBy = "reviewerUser")
     @JsonManagedReference
-    private List<> reviews;
+    private List<Review> reviews;
 
-    @OneToMany(mappedBy = "reviewed")
+    @OneToMany(mappedBy = "reviewedUser")
     @JsonManagedReference
     private List<Review> reviewsReceived;
-    }
+}
