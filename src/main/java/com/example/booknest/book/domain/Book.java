@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Setter
 @Getter
@@ -15,13 +17,27 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idBook;
+
     private String title;
-    private String author;
+
+    @ElementCollection
+    private List<String> authors;
+
+    @ElementCollection
+    private List<String> tags;
+
     private String publisher;
+
     private String yearOfPublication;
+
     private String state;
-    private String price;
+
+    private Double price; //
+
     private Boolean exchange;
+
+    @ElementCollection
+    private List<String> bookPhotos; //guarda las rutas de las fotos
 
     @ManyToOne
     @JoinColumn(name= "id_user")

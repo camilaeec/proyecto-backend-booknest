@@ -1,8 +1,10 @@
 package com.example.booknest.book.application;
 
 import com.example.booknest.book.domain.Book;
+import com.example.booknest.book.domain.BookService;
+import com.example.booknest.book.dto.BookBasicDTO;
 import com.example.booknest.book.infraestructure.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,32 +12,51 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/books")
 public class BookController {
-    @Autowired
-    BookRepository bookRepository;
+    private final BookRepository bookRepository;
+    private final BookService bookService;
 
-    @GetMapping
-    public ResponseEntity<List<Book>> getBooks() {
-        List<Book> books = bookRepository.findAll();
+    @PostMapping
+    public ResponseEntity<Book> createBook(@RequestBody BookBasicDTO dto) {
+        return ResponseEntity.ok(bookService.createBook(dto));
+    }
 
-        return ResponseEntity.ok(books);
+    @GetMapping("/title/{title}")
+    public ResponseEntity<List<Book>> getBooksByTitle(@PathVariable String title) {
+        return ResponseEntity.ok(bookService.getByTitle(title));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable Long id) {
+    public ResponseEntity<Book> getBookById(@PathVariable Long id) { //para denunciar publicacion
         Optional<Book> book = bookRepository.findById(id);
         return ResponseEntity.ok(book.orElse(null));
     }
 
-    @PostMapping
-    public ResponseEntity<Book> createBook(@RequestBody Book book) {
-        return ResponseEntity.ok(bookRepository.save(book));
+    @GetMapping("/author/{author}")
+    public ResponseEntity<List<Book>> getBooksByAuthor(@PathVariable String author) {
+        return ResponseEntity.ok(bookService.getByAuthor(author));
+    }
+
+    @GetMapping("tag/{tag}")
+    public ResponseEntity<List<Book>> getBooksByTag(@PathVariable String tag) {
+        return ResponseEntity.ok(bookService.getByTag(tag));
+    }
+
+    @GetMapping("/price/{price}")
+    public ResponseEntity<List<Book>> getBooksByPrice(@PathVariable Double price) {
+        return ResponseEntity.ok(bookService.getByPrice(price));
+    }
+
+    @PatchMapping("{id}/price")
+    public ResponseEntity<Book> updateBookPrice(@PathVariable Long id, @RequestBody Double newPrice) {
+        return ResponseEntity.ok(bookService.updatePrice(id, newPrice));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Book> deleteBook(@PathVariable Long id) {
-        bookRepository.deleteById(id);
-        return ResponseEntity.ok(null);
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+        bookService.deleteBook(id);
+        return ResponseEntity.noContent().build();
     }
 }
