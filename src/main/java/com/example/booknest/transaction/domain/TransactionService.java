@@ -29,6 +29,7 @@ public class TransactionService {
 
     @Transactional
     public Transaction createMoneyTransaction(Long buyerId, Long bookId, Integer offeredPrice) {
+        /*
         User buyer = userService.getUserById(buyerId)
                 .orElseThrow(() -> new RuntimeException("Comprador no encontrado"));
         Book book = bookService.getBookById(bookId)
@@ -37,11 +38,12 @@ public class TransactionService {
         if (book.getUser() == null) {
             throw new RuntimeException("El libro no tiene un vendedor asociado");
         }
+        */
 
         Transaction transaction = new Transaction();
-        transaction.setBuyer(buyer);
-        transaction.setSeller(book.getUser());
-        transaction.setBook(book);
+        //transaction.setBuyer(buyer);
+        // transaction.setSeller(book.getUser()); // Comentado hasta integrar User
+        //transaction.setBook(book);
         transaction.setCost(offeredPrice);
         transaction.setDate(new Date());
         transaction.setAccepted(null);
@@ -51,6 +53,7 @@ public class TransactionService {
 
     @Transactional
     public Transaction createExchangeTransaction(Long buyerId, Long bookIdWanted, Long bookIdOffered) {
+        /*
         User buyer = userService.getUserById(buyerId)
                 .orElseThrow(() -> new RuntimeException("Comprador no encontrado"));
         Book bookWanted = bookService.getBookById(bookIdWanted)
@@ -61,11 +64,12 @@ public class TransactionService {
         if (!bookOffered.getUser().getIdUser().equals(buyerId)) {
             throw new RuntimeException("El libro ofrecido debe pertenecer al comprador");
         }
+        */
 
         Transaction transaction = new Transaction();
-        transaction.setBuyer(buyer);
-        transaction.setSeller(bookWanted.getUser());
-        transaction.setBook(bookWanted);
+        //transaction.setBuyer(buyer);
+        // transaction.setSeller(bookWanted.getUser());
+        //transaction.setBook(bookWanted);
         transaction.setCost(null);
         transaction.setDate(new Date());
         transaction.setAccepted(null);
