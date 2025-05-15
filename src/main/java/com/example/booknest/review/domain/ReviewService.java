@@ -42,18 +42,18 @@ public class ReviewService {
                 .orElseThrow(() -> new RuntimeException("Reseña no encontrada"));
         return modelMapper.map(review, ReviewResponseDTO.class);
     }
-//
-//    // Obtener reseñas por usuario calificado (corregido)
-//    public List<ReviewResponseDTO> getReviewsByReviewedUser(Long idUsuarioCalificado) {
-//        return reviewRepository.findByReviewedUserIdUser(idUsuarioCalificado).stream() // ✔️ Updated
-//                .map(review -> modelMapper.map(review, ReviewResponseDTO.class))
-//                .toList();
-//    }
-//
-//    public void deleteReview(Long id) {
-//        if (!reviewRepository.existsById(id)) {
-//            throw new RuntimeException("Reseña no encontrada");
-//        }
-//        reviewRepository.deleteById(id);
-//    }
+
+    // Obtener reseñas por usuario calificado (corregido)
+    public List<ReviewResponseDTO> getReviewsByReviewedUser(Long idUsuarioCalificado) {
+        return reviewRepository.findByReviewedUserIdUser(idUsuarioCalificado).stream() // ✔️ Updated
+                .map(review -> modelMapper.map(review, ReviewResponseDTO.class))
+                .toList();
+    }
+
+    public void deleteReview(Long id) {
+        if (!reviewRepository.existsById(id)) {
+            throw new RuntimeException("Reseña no encontrada");
+        }
+        reviewRepository.deleteById(id);
+    }
 }
