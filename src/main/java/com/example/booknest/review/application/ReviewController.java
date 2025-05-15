@@ -34,15 +34,15 @@ public class ReviewController {
     }
      */
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ReviewResponseDTO> getReviewById(@PathVariable Long id) {
-        ReviewResponseDTO review = reviewService.getReviewById(id);
-        return ResponseEntity.ok(review);
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteReview(@PathVariable Long id) {
-        reviewService.deleteReview(id);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<ReviewResponseDTO> getReviewById(@PathVariable Long id) {
+//        ReviewResponseDTO review = reviewService.getReviewById(id);
+//        return ResponseEntity.ok(review);
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void deleteReview(@PathVariable Long id) {
+//        reviewService.deleteReview(id);
+//    }
 }

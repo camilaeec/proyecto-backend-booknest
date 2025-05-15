@@ -15,7 +15,11 @@ public class SignInEventListener {
 
     @EventListener
     @Async
-    public void handleSignInEvent(SignInEvent event) throws MessagingException {
-        emailService.sendWelcomeEmail(event.getEmail(), event.getUsername());
+    public void handleSignInEvent(SignInEvent event) {
+        try {
+            emailService.sendWelcomeEmail(event.getEmail(), event.getUsername());
+        } catch (MessagingException e) {
+            throw new RuntimeException("Fail to send email", e);
+        }
     }
 }
