@@ -5,11 +5,11 @@ import org.springframework.context.ApplicationEvent;
 
 @Getter
 public class SignInEvent extends ApplicationEvent {
-    private final String email;
     private final String username;
+    private final String email;
 
-    public SignInEvent(String email, String username) {
-        super(email);
+    public SignInEvent(Object source,String email,String username) {
+        super(source);
         this.email = email;
         this.username = username;
     }
