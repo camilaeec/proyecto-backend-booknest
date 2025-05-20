@@ -1,5 +1,6 @@
 package com.example.booknest.user.application;
 
+import com.example.booknest.book.domain.Book;
 import com.example.booknest.user.domain.User;
 import com.example.booknest.user.domain.UserService;
 import com.example.booknest.user.dto.UseResponseForOtherUsersDTO;
@@ -11,6 +12,7 @@ import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,31 +59,10 @@ public class UserController {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/me/books")
+    @PreAuthorize("hasAnyRole('COMMON_USER', 'ADMIN')")
+    public ResponseEntity<List<Book>> getMyBooks() {
+        return ResponseEntity.ok(userService.getBooksByCurrentUser());
+    }
 }
-//    @GetMapping
-//    ResponseEntity<List<User>> getUsers() {
-//        List<User> users = userRepository.findAll();
-//        return ResponseEntity.ok(users);
-//    }
-//
-//    @GetMapping("/{id}")
-//    ResponseEntity<User> getUser(@PathVariable long id) {
-//        Optional<User> user = userRepository.findById(id);
-//        return ResponseEntity.ok(user.orElse(null));
-//    }
-//
-//    @PostMapping
-//    ResponseEntity<User> createUser(@RequestBody User request) {
-//        return ResponseEntity.ok(userRepository.save(request));
-//    }
-//
-//    @PatchMapping
-//    ResponseEntity<User> updateUser(@RequestBody User request) {
-//        return ResponseEntity.ok(userRepository.save(request));
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    ResponseEntity<User> deleteUser(@PathVariable Long id) {
-//        userRepository.deleteById(id);
-//        return ResponseEntity.ok(null);
-//    }

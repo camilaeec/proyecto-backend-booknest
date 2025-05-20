@@ -1,5 +1,7 @@
 package com.example.booknest.user.domain;
 
+import com.example.booknest.book.domain.Book;
+import com.example.booknest.book.infraestructure.BookRepository;
 import com.example.booknest.exception.ResourceAlreadyExists;
 import com.example.booknest.exception.ResourceNotFoundException;
 import com.example.booknest.exception.UserMustBeAuthenticatedException;
@@ -18,12 +20,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final BookRepository bookRepository;
 
     private User getByEmail(String email){ //Solo para usos locales!!
         return userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User not found"));
@@ -113,5 +118,13 @@ public class UserService {
             User user = userRepository.findByEmail(username).orElseThrow(() -> new ResourceNotFoundException("User not found"));
             return (UserDetails) user;
         };
+    }
+
+    public List<Book> getBooksByCurrentUser() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+        return bookRepository.findByUser(user);
     }
 }

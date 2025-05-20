@@ -25,8 +25,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     void deleteOtherTransactionsForBook(Long bookId, Long transactionId);
 
     // Buscar transacciones por comprador
-    List<Transaction> findByBuyerIdUser(Long buyerId);
+    List<Transaction> findByBuyerId(Long buyerId);
 
     // Buscar transacciones por vendedor
-    List<Transaction> findBySellerIdUser(Long sellerId);
+    List<Transaction> findBySellerId(Long sellerId);
 }

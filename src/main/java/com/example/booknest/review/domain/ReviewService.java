@@ -45,7 +45,7 @@ public class ReviewService {
 
     // Obtener reseñas por usuario calificado (corregido)
     public List<ReviewResponseDTO> getReviewsByReviewedUser(Long idUsuarioCalificado) {
-        return reviewRepository.findByReviewedUserIdUser(idUsuarioCalificado).stream() // ✔️ Updated
+        return reviewRepository.findByReviewedUserId(idUsuarioCalificado).stream() // ✔️ Updated
                 .map(review -> modelMapper.map(review, ReviewResponseDTO.class))
                 .toList();
     }

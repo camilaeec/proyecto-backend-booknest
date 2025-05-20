@@ -6,6 +6,7 @@ import com.example.booknest.book.dto.BookBasicDTO;
 import com.example.booknest.book.infraestructure.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class BookController {
     private final BookRepository bookRepository;
     private final BookService bookService;
 
+    @PreAuthorize("hasAnyRole('COMMON_USER', 'ADMIN')")
     @PostMapping
     public ResponseEntity<Book> createBook(@RequestBody BookBasicDTO dto) {
         return ResponseEntity.ok(bookService.createBook(dto));
@@ -49,11 +51,13 @@ public class BookController {
         return ResponseEntity.ok(bookService.getByPrice(price));
     }
 
+    @PreAuthorize("hasRole('ADMIN') or @bookService.isBookOwner(authentication.name, #id)")
     @PatchMapping("{id}/price")
     public ResponseEntity<Book> updateBookPrice(@PathVariable Long id, @RequestBody Double newPrice) {
         return ResponseEntity.ok(bookService.updatePrice(id, newPrice));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);

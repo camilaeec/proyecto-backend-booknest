@@ -64,4 +64,10 @@ public class BookService {
         }
         bookRepository.deleteById(id);
     }
+
+    public boolean isBookOwner(String userEmail, Long bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
+        return book.getUser().getEmail().equals(userEmail);
+    }
 }

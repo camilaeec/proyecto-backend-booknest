@@ -1,6 +1,7 @@
 package com.example.booknest.book.infraestructure;
 
 import com.example.booknest.book.domain.Book;
+import com.example.booknest.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +16,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findByTagsContaining(String tag);
 
     List<Book> findByPrice(Double price);
+
+    List<Book> findByUser(User user);
 
     @Query(value = """
         SELECT * FROM book b
