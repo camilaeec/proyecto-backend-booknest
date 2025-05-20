@@ -11,22 +11,16 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+    @Query("SELECT t FROM Transaction t WHERE t.id = :id")
+    Transaction findById(long id);
 
-    // Buscar transacciones por libro
-    List<Transaction> findByBookIdBook(Long bookId);
+    List<Transaction> findByBookId(Long bookId);
+    List<Transaction> findByBookIdAndIdNot(Long bookId, Long transactionId);
+    List<Transaction> findByBuyerId(Long buyerId);
+    List<Transaction> findBySellerId(Long sellerId);
 
-    // Buscar transacciones por libro excluyendo una específica
-    List<Transaction> findByBookIdBookAndIdTransactionNot(Long bookId, Long transactionId);
-
-    // Eliminar transacciones por libro (excepto una específica)
     @Modifying
     @Transactional
     @Query("DELETE FROM Transaction t WHERE t.book.idBook = :bookId AND t.idTransaction != :transactionId")
     void deleteOtherTransactionsForBook(Long bookId, Long transactionId);
-
-    // Buscar transacciones por comprador
-    List<Transaction> findByBuyerId(Long buyerId);
-
-    // Buscar transacciones por vendedor
-    List<Transaction> findBySellerId(Long sellerId);
 }
