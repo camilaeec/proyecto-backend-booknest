@@ -11,7 +11,6 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-    @Query("SELECT t FROM Transaction t WHERE t.id = :id")
     Transaction findById(long id);
 
     List<Transaction> findByBookId(Long bookId);

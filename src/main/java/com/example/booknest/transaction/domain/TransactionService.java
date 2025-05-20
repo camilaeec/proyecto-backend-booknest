@@ -183,5 +183,4 @@ public class TransactionService {
 
         return book.getUser() != null && book.getUser().getId().equals(user.getId());
     }
-    }
 }
