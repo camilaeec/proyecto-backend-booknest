@@ -1,0 +1,25 @@
+package com.example.booknest.book.dto;
+
+import com.example.booknest.user.dto.UseResponseForOtherUsersDTO;
+import lombok.Getter;
+import lombok.Setter;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Getter
+@Setter
+public class BookResponse {
+    private Long idBook;
+    private String title;
+    private List<String> authors;
+    private List<String> tags;
+    private String publisher;
+    private String yearOfPublication;
+    private String state;
+    private Double price;
+    private Boolean exchange;
+    private List<String> bookPhotos;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private UseResponseForOtherUsersDTO owner;
+}

@@ -1,64 +1,79 @@
 package com.example.booknest.book.application;
 
-import com.example.booknest.book.domain.Book;
 import com.example.booknest.book.domain.BookService;
-import com.example.booknest.book.dto.BookBasicDTO;
-import com.example.booknest.book.infraestructure.BookRepository;
+import com.example.booknest.book.dto.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/books")
 public class BookController {
-    private final BookRepository bookRepository;
     private final BookService bookService;
 
-    @PreAuthorize("hasAnyRole('COMMON_USER', 'ADMIN')")
+    // ====================== CREAR LIBRO ======================
     @PostMapping
-    public ResponseEntity<Book> createBook(@RequestBody BookBasicDTO dto) {
-        return ResponseEntity.ok(bookService.createBook(dto));
+    @PreAuthorize("hasAnyRole('COMMON_USER', 'ADMIN')")
+    public ResponseEntity<BookResponse> createBook(
+            @RequestBody @Valid CreateBookRequest request
+    ) {
+        BookResponse response = bookService.createBook(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    // ====================== BUSCAR LIBROS ======================
     @GetMapping("/title/{title}")
-    public ResponseEntity<List<Book>> getBooksByTitle(@PathVariable String title) {
+    public ResponseEntity<List<BookResponse>> getBooksByTitle(
+            @PathVariable String title
+    ) {
         return ResponseEntity.ok(bookService.getByTitle(title));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable Long id) { //para denunciar publicacion
-        Optional<Book> book = bookRepository.findById(id);
-        return ResponseEntity.ok(book.orElse(null));
+    public ResponseEntity<BookResponse> getBookById(@PathVariable Long id) {
+        return bookService.getBookById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping("/author/{author}")
-    public ResponseEntity<List<Book>> getBooksByAuthor(@PathVariable String author) {
+    public ResponseEntity<List<BookResponse>> getBooksByAuthor(
+            @PathVariable String author
+    ) {
         return ResponseEntity.ok(bookService.getByAuthor(author));
     }
 
-    @GetMapping("tag/{tag}")
-    public ResponseEntity<List<Book>> getBooksByTag(@PathVariable String tag) {
+    @GetMapping("/tag/{tag}") // Corregido: Añadido "/" antes de "tag"
+    public ResponseEntity<List<BookResponse>> getBooksByTag(
+            @PathVariable String tag
+    ) {
         return ResponseEntity.ok(bookService.getByTag(tag));
     }
 
     @GetMapping("/price/{price}")
-    public ResponseEntity<List<Book>> getBooksByPrice(@PathVariable Double price) {
+    public ResponseEntity<List<BookResponse>> getBooksByPrice(
+            @PathVariable Double price
+    ) {
         return ResponseEntity.ok(bookService.getByPrice(price));
     }
 
+    @PatchMapping("/{id}/price")
     @PreAuthorize("hasRole('ADMIN') or @bookService.isBookOwner(authentication.name, #id)")
-    @PatchMapping("{id}/price")
-    public ResponseEntity<Book> updateBookPrice(@PathVariable Long id, @RequestBody Double newPrice) {
-        return ResponseEntity.ok(bookService.updatePrice(id, newPrice));
+    public ResponseEntity<BookResponse> updateBookPrice(
+            @PathVariable Long id,
+            @RequestBody @Valid PriceUpdateRequest request
+    ) {
+        return ResponseEntity.ok(bookService.updatePrice(id, request));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
