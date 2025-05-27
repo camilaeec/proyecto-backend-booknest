@@ -20,6 +20,7 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
+    /*
     @PreAuthorize("hasRole('COMMON_USER')")
     @PostMapping("/money")
     public ResponseEntity<Transaction> createMoneyTransaction(
@@ -27,6 +28,8 @@ public class TransactionController {
             @RequestParam Integer offeredPrice) {
         return ResponseEntity.ok(transactionService.createMoneyTransaction(bookId, offeredPrice));
     }
+    */
+    
 
     @PreAuthorize("hasRole('COMMON_USER')")
     @PostMapping("/exchange")

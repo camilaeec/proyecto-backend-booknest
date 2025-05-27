@@ -13,10 +13,10 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     Transaction findById(long id);
 
-    List<Transaction> findByBookId(Long bookId);
-    List<Transaction> findByBookIdAndIdNot(Long bookId, Long transactionId);
-    List<Transaction> findByBuyerId(Long buyerId);
-    List<Transaction> findBySellerId(Long sellerId);
+    List<Transaction> findByBook_IdBook(Long bookId);
+    List<Transaction> findByBook_IdBookAndIdTransactionNot(Long bookId, Long transactionId);
+    List<Transaction> findByBuyer_Id(Long buyerId);
+    List<Transaction> findBySeller_Id(Long sellerId);
 
     @Modifying
     @Transactional
