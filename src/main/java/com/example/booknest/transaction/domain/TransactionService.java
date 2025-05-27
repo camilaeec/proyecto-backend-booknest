@@ -147,15 +147,15 @@ public class TransactionService {
     }
 
     public List<Transaction> getTransactionsByBook(Long bookId) {
-        return transactionRepository.findByBookId(bookId);
+        return transactionRepository.findByBook_IdBook(bookId);
     }
 
     public List<Transaction> getTransactionsByBuyer(Long buyerId) {
-        return transactionRepository.findByBuyerId(buyerId);
+        return transactionRepository.findByBuyer_Id(buyerId);
     }
 
     public List<Transaction> getTransactionsBySeller(Long sellerId) {
-        return transactionRepository.findBySellerId(sellerId);
+        return transactionRepository.findBySeller_Id(sellerId);
     }
 
     public boolean isTransactionParticipant(String username, Long transactionId) {
