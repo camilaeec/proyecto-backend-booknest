@@ -16,8 +16,6 @@ public class BookResponse {
     private String publisher;
     private String yearOfPublication;
     private String state;
-    private Double price;
-    private Boolean exchange;
     private List<String> bookPhotos;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -32,19 +32,13 @@ public class Book {
 
     private String state;
 
-    private Double price; //
-
-    private Boolean exchange;
-
     @ElementCollection
     private List<String> bookPhotos; //guarda las rutas de las fotos
 
     @ManyToOne
     @JoinColumn(name= "id_user")
-    @JsonBackReference
     private User user;
 
     @OneToOne(mappedBy = "book")
-    @JsonBackReference
     private Transaction transaction;
 }

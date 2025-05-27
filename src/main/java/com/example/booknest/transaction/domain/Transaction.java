@@ -30,15 +30,12 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name="id_buyer")
-    @JsonBackReference
     private User buyer;
 
     @ManyToOne
     @JoinColumn(name="id_seller")
-    @JsonBackReference
     private User seller;
 
     @OneToOne
-    @JsonManagedReference
     private Book book;
 }

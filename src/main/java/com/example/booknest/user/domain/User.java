@@ -46,9 +46,6 @@ public class User implements UserDetails {
     @Column(name="password", nullable=false)
     private String password;
 
-    @Column(name="location", nullable=false)
-    private String location;
-
     @Column(name="phone_number", nullable=false)
     private String phoneNumber;
 

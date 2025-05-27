@@ -6,5 +6,4 @@ import lombok.Data;
 public class UseResponseForOtherUsersDTO {
     private Long id;
     private String nickname;
-    private String location;
 }

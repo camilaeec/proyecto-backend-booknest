@@ -48,7 +48,6 @@ public class AuthService {
         user.setName(registerDTO.getName());
         user.setLastname(registerDTO.getLastname());
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
-        user.setLocation(registerDTO.getLocation());
         user.setPhoneNumber(registerDTO.getPhoneNumber());
         user.setRole(Role.COMMON_USER);
         userRepository.save(user);
@@ -68,7 +67,6 @@ public class AuthService {
         user.setName(registerDTO.getName());
         user.setLastname(registerDTO.getLastname());
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
-        user.setLocation(registerDTO.getLocation());
         user.setPhoneNumber(registerDTO.getPhoneNumber());
         user.setRole(Role.ADMIN);
         userRepository.save(user);

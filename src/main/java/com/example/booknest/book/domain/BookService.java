@@ -22,24 +22,14 @@ public class BookService {
     private final ModelMapper modelMapper;
 
     public BookResponse createBook(CreateBookRequest request) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User owner = userService.getMeLocal(); //hola, el error está acá
 
         Book book = modelMapper.map(request, Book.class);
-        book.setUser(owner); 
+        book.setUser(owner);
+
 
         Book savedBook = bookRepository.save(book);
         return modelMapper.map(savedBook, BookResponse.class);
-    }
-
-    public BookResponse updatePrice(Long id, PriceUpdateRequest request) {
-        Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Libro no encontrado"));
-
-        book.setPrice(request.getNewPrice());
-        Book updatedBook = bookRepository.save(book);
-
-        return modelMapper.map(updatedBook, BookResponse.class);
     }
 
     // ====================== OBTENER LIBRO POR ID ======================
@@ -62,12 +52,6 @@ public class BookService {
 
     public List<BookResponse> getByTag(String tag) {
         return bookRepository.findByTagsContaining(tag).stream()
-                .map(book -> modelMapper.map(book, BookResponse.class))
-                .collect(Collectors.toList());
-    }
-
-    public List<BookResponse> getByPrice(Double price) {
-        return bookRepository.findByPrice(price).stream()
                 .map(book -> modelMapper.map(book, BookResponse.class))
                 .collect(Collectors.toList());
     }

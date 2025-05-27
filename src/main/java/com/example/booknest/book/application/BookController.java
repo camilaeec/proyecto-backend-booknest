@@ -56,22 +56,6 @@ public class BookController {
         return ResponseEntity.ok(bookService.getByTag(tag));
     }
 
-    @GetMapping("/price/{price}")
-    public ResponseEntity<List<BookResponse>> getBooksByPrice(
-            @PathVariable Double price
-    ) {
-        return ResponseEntity.ok(bookService.getByPrice(price));
-    }
-
-    @PatchMapping("/{id}/price")
-    @PreAuthorize("hasRole('ADMIN') or @bookService.isBookOwner(authentication.name, #id)")
-    public ResponseEntity<BookResponse> updateBookPrice(
-            @PathVariable Long id,
-            @RequestBody @Valid PriceUpdateRequest request
-    ) {
-        return ResponseEntity.ok(bookService.updatePrice(id, request));
-    }
-
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {

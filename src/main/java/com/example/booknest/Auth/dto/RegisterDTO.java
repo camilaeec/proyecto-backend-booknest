@@ -9,6 +9,5 @@ public class RegisterDTO {
     private String nickname;
     private String email;
     private String password;
-    private String location;
     private String phoneNumber;
 }
