@@ -1,7 +1,7 @@
 package com.example.booknest.transaction.domain;
 
 import com.example.booknest.book.domain.Book;
-import com.example.booknest.book.domain.BookService;
+import com.example.booknest.book.infraestructure.BookRepository;
 import com.example.booknest.transaction.infraestructure.TransactionRepository;
 import com.example.booknest.user.domain.User;
 import com.example.booknest.user.domain.UserService;
@@ -18,14 +18,14 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final UserService userService;
-    private final BookService bookService;
+    private final BookRepository bookRepository;
 
     public TransactionService(TransactionRepository transactionRepository,
                               UserService userService,
-                              BookService bookService) {
+                              BookRepository bookRepository) {
         this.transactionRepository = transactionRepository;
         this.userService = userService;
-        this.bookService = bookService;
+        this.bookRepository = bookRepository;
     }
 
     public UseResponseForOtherUsersDTO getCurrentUser() {
@@ -33,10 +33,11 @@ public class TransactionService {
         return userService.getUserByEmail(username);
     }
 
+    /*
     @Transactional
     public Transaction createMoneyTransaction(Long bookId, Integer offeredPrice) {
         UseResponseForOtherUsersDTO buyerDTO = getCurrentUser();
-        Book book = bookService.getById(bookId);
+        Book book = bookRepository.getById(bookId);
 
         if (book == null) {
             throw new RuntimeException("Libro no encontrado");
@@ -59,12 +60,13 @@ public class TransactionService {
 
         return transactionRepository.save(transaction);
     }
+    */
 
     @Transactional
     public Transaction createExchangeTransaction(Long bookIdWanted, Long bookIdOffered) {
         UseResponseForOtherUsersDTO buyerDTO = getCurrentUser();
-        Book bookWanted = bookService.getById(bookIdWanted);
-        Book bookOffered = bookService.getById(bookIdOffered);
+        Book bookWanted = bookRepository.getById(bookIdWanted);
+        Book bookOffered = bookRepository.getById(bookIdOffered);
 
         if (bookWanted == null || bookOffered == null) {
             throw new RuntimeException("Libro no encontrado");
@@ -176,7 +178,7 @@ public class TransactionService {
     }
 
     public boolean isBookOwner(String username, Long bookId) {
-        Book book = bookService.getById(bookId);
+        Book book = bookRepository.getById(bookId);
         if (book == null) return false;
 
         UseResponseForOtherUsersDTO user = userService.getUserByEmail(username);

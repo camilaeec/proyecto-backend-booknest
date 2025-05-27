@@ -34,7 +34,7 @@ public class UserService {
         return userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
-    private User getMeLocal(){ // Solo se usa para funciones dentro del backend
+    public User getMeLocal(){ // Solo se usa para funciones dentro del backend
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if(auth == null || !auth.isAuthenticated()){
             throw new UserMustBeAuthenticatedException("User is not authenticated");
