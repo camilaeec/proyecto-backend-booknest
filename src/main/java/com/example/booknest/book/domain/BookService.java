@@ -23,7 +23,7 @@ public class BookService {
 
     public BookResponse createBook(CreateBookRequest request) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User owner = userService.getUserByEmail(email); //hola, el error está acá
+        User owner = userService.getMeLocal(); //hola, el error está acá
 
         Book book = modelMapper.map(request, Book.class);
         book.setUser(owner); 
