@@ -25,9 +25,6 @@ public class CreateBookRequest {
     @NotBlank(message = "El estado del libro es obligatorio")
     private String state;
 
-    @PositiveOrZero(message = "El precio no puede ser negativo")
-    private Double price;
-
     private Boolean exchange; // true si acepta trueque
 
     @NotEmpty(message = "Debe subir al menos una foto")

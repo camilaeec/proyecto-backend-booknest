@@ -84,9 +84,6 @@ public class UserService {
         if(userRequestDTO.getPassword() != null){
             user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         }
-        if(userRequestDTO.getLocation() != null){
-            user.setLocation(userRequestDTO.getLocation());
-        }
         if(userRequestDTO.getPhoneNumber() != null){
             user.setPhoneNumber(userRequestDTO.getPhoneNumber());
         }

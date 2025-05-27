@@ -18,24 +18,6 @@ public class EmailService {
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
 
-    public void sendBookReminder(String to, String title) throws MessagingException {
-        Context context = new Context();
-        context.setVariable("title", title);
-
-        String process = templateEngine.process("book-reminder.html", context);
-
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,
-                MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                StandardCharsets.UTF_8.name());
-
-        helper.setTo(to);
-        helper.setText(process, true);
-        helper.setSubject("Recordatorio: " + title);
-
-        mailSender.send(mimeMessage);
-    }
-
     public void sendWelcomeEmail(String to, String name) throws MessagingException {
         Context context = new Context();
         context.setVariable("name", name);

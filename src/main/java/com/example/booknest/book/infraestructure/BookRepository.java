@@ -15,8 +15,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findByTagsContaining(String tag);
 
-    List<Book> findByPrice(Double price);
-
     List<Book> findByUser(User user);
 
     @Query(value = """
