@@ -66,24 +66,40 @@ public class TransactionService {
     @Transactional
     public Transaction createExchangeTransaction(Long bookIdWanted, Long bookIdOffered) {
         UseResponseForOtherUsersDTO buyerDTO = getCurrentUser();
-        Book bookWanted = bookRepository.findById(bookIdWanted).orElseThrow(() -> new ResourceNotFoundException("Libro deseado no encontrado"));
-        Book bookOffered = bookRepository.findById(bookIdOffered).orElseThrow(() -> new ResourceNotFoundException("Libro deseado no encontrado"));
+        User buyer = userService.getMeLocal();
+
+        Book bookWanted = bookRepository.findById(bookIdWanted)
+                .orElseThrow(() -> new ResourceNotFoundException("Libro deseado no encontrado"));
+
+        Book bookOffered = bookRepository.findById(bookIdOffered)
+                .orElseThrow(() -> new ResourceNotFoundException("Libro ofrecido no encontrado"));
 
         if (!bookOffered.getUser().getId().equals(buyerDTO.getId())) {
             throw new RuntimeException("El libro ofrecido debe pertenecer al comprador");
         }
 
-        User buyer = userService.getMeLocal();
+        if (bookWanted.getUser().getId().equals(buyer.getId())) {
+            throw new RuntimeException("No puedes intercambiar un libro contigo mismo.");
+        }
 
+        boolean yaAceptado = transactionRepository
+                .findByBook_IdBook(bookIdWanted)
+                .stream()
+                .anyMatch(t -> Boolean.TRUE.equals(t.getAccepted()));
+
+        if (yaAceptado) {
+            throw new RuntimeException("El libro ya fue intercambiado");
+        }
         Transaction transaction = new Transaction();
         transaction.setBuyer(buyer);
         transaction.setSeller(bookWanted.getUser());
         transaction.setBook(bookWanted);
         transaction.setDate(new Date());
         transaction.setAccepted(null);
-
+        transaction.setOfferedBook(bookOffered);
         return transactionRepository.save(transaction);
     }
+
 
     public List<Transaction> getAllTransactions() {
         return transactionRepository.findAll();
@@ -134,8 +150,8 @@ public class TransactionService {
             throw new RuntimeException("Solo el vendedor puede eliminar la transacción");
         }
 
-        if (transaction.getAccepted() == null || transaction.getAccepted()) {
-            throw new RuntimeException("Solo se pueden eliminar transacciones rechazadas explícitamente");
+        if (Boolean.TRUE.equals(transaction.getAccepted())) {
+            throw new RuntimeException("No se puede eliminar una transacción ya aceptada");
         }
 
         transactionRepository.delete(transaction);

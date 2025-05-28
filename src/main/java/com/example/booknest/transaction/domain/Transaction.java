@@ -22,8 +22,8 @@ public class Transaction {
     @Column(name="Date", nullable=false)
     private Date date;
 
-    @Column(name="Accepted")
-    private Boolean Accepted;
+    @Column(name="accepted")
+    private Boolean accepted;
 
     @ManyToOne
     @JoinColumn(name="id_buyer")
@@ -35,4 +35,9 @@ public class Transaction {
 
     @OneToOne
     private Book book;
+
+    @OneToOne
+    @JoinColumn(name = "offered_book_id")
+    private Book offeredBook;
+
 }
