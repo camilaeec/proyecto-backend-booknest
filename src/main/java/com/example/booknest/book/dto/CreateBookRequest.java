@@ -25,8 +25,6 @@ public class CreateBookRequest {
     @NotBlank(message = "El estado del libro es obligatorio")
     private String state;
 
-    private Boolean exchange; // true si acepta trueque
-
     @NotEmpty(message = "Debe subir al menos una foto")
     private List<@NotBlank String> bookPhotos;
 }

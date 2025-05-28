@@ -19,7 +19,7 @@ public class BookController {
 
     // ====================== CREAR LIBRO ======================
     @PostMapping
-    @PreAuthorize("hasAnyRole('COMMON_USER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('COMMON_USER')")
     public ResponseEntity<BookResponse> createBook(
             @RequestBody @Valid CreateBookRequest request
     ) {
