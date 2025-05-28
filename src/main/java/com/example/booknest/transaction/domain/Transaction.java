@@ -19,9 +19,6 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTransaction;
 
-    @Column(name="Cost")
-    private Integer cost;
-
     @Column(name="Date", nullable=false)
     private Date date;
 

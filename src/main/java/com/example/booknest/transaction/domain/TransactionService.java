@@ -2,6 +2,7 @@ package com.example.booknest.transaction.domain;
 
 import com.example.booknest.book.domain.Book;
 import com.example.booknest.book.infraestructure.BookRepository;
+import com.example.booknest.exception.ResourceNotFoundException;
 import com.example.booknest.transaction.infraestructure.TransactionRepository;
 import com.example.booknest.user.domain.User;
 import com.example.booknest.user.domain.UserService;
@@ -65,25 +66,19 @@ public class TransactionService {
     @Transactional
     public Transaction createExchangeTransaction(Long bookIdWanted, Long bookIdOffered) {
         UseResponseForOtherUsersDTO buyerDTO = getCurrentUser();
-        Book bookWanted = bookRepository.getById(bookIdWanted);
-        Book bookOffered = bookRepository.getById(bookIdOffered);
-
-        if (bookWanted == null || bookOffered == null) {
-            throw new RuntimeException("Libro no encontrado");
-        }
+        Book bookWanted = bookRepository.findById(bookIdWanted).orElseThrow(() -> new ResourceNotFoundException("Libro deseado no encontrado"));
+        Book bookOffered = bookRepository.findById(bookIdOffered).orElseThrow(() -> new ResourceNotFoundException("Libro deseado no encontrado"));
 
         if (!bookOffered.getUser().getId().equals(buyerDTO.getId())) {
             throw new RuntimeException("El libro ofrecido debe pertenecer al comprador");
         }
 
-        User buyer = new User();
-        buyer.setId(buyerDTO.getId());
+        User buyer = userService.getMeLocal();
 
         Transaction transaction = new Transaction();
         transaction.setBuyer(buyer);
         transaction.setSeller(bookWanted.getUser());
         transaction.setBook(bookWanted);
-        transaction.setCost(null);
         transaction.setDate(new Date());
         transaction.setAccepted(null);
 
