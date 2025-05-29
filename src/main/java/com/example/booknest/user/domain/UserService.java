@@ -117,11 +117,7 @@ public class UserService {
     }
 
     public List<Book> getBooksByCurrentUser() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
-
-        return bookRepository.findByUser(user);
+        return null;
     }
 
     public void save(User seller) {

@@ -1,8 +1,10 @@
 package com.example.booknest.user.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class UserResponseForOtherUsersDTO {
     private Long id;
     private String nickname;
