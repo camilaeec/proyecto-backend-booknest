@@ -1,7 +1,7 @@
 # BookNest 
 _Plataforma de Intercambio de Libros para Universitarios_ 
 
-**Curso**: CS 2031 Desarrollo Basado en Plataforma  
+**Curso**: CS 2031 Desarrollo Basado en Plataformas
 **Integrantes**:  
 - Espinoza Cabrera, Camila Del Rosario
 - Frisancho Gálvez, Gabriel Nicolás
@@ -26,7 +26,7 @@ _Plataforma de Intercambio de Libros para Universitarios_
 
 ## Introducción
 
-**Contexto**: BookNest nace como solución al problema específico de los estudiantes de UTEC que necesitan intercambiar libros de texto y material académico, relacionado principalmente al mercado de segunda mano y comercio electrónico. La plataforma facilita el trueque de libros entre compañeros, eliminando la necesidad de transacciones monetarias y fomentando la comunidad universitaria. Surge por la falta de plataformas especializadas en el intercambio de libros con funcionalidades que atiendan a las funcionalidades específicas del contexto.
+**Contexto**: BookNest nace como solución al problema específico de los estudiantes de UTEC que necesitan intercambiar libros de diversos géneros, relacionado principalmente al mercado de segunda mano y comercio electrónico. La plataforma facilita el trueque de libros entre compañeros, eliminando la necesidad de transacciones monetarias y fomentando la comunidad universitaria. Surge por la falta de plataformas especializadas en el intercambio de libros con funcionalidades que atiendan a las funcionalidades específicas del contexto.
 
 **Objetivos del Proyecto**:
 - Crear un marketplace de intercambio exclusivo para estudiantes UTEC  
@@ -59,7 +59,7 @@ _Plataforma de Intercambio de Libros para Universitarios_
 1. **Funcionalidades Implementadas**  
    - Feature 1: Autentificación de usuarios
    - Feature 2: Libre comercio de transacciones entre estudiantes
-   - Feature 3: Mayor información brindada sobre el libro puesto a 
+   - Feature 3: Mayor información brindada sobre el libro puesto a intercambio
 2. **Tecnologías Utilizadas**  
    - Lenguajes: Java
    - Frameworks: Springboot con autentificación JWT
@@ -79,7 +79,14 @@ d. Usuario A recibe notificación y puede:
    - Rechazar (permite nuevas ofertas)  
 e. Sistema notifica a ambos usuarios para coordinar intercambio físico  
 
-4. **Endpoints Críticos**:  
+4. **Endpoints Críticos**:
+   - Auth
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| POST   | /api/auth | Registrar usuario nuevo |
+| GET    | /api/register | Registar usuario |
+
+   - Book
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
 | POST   | /api/books | Registrar libro |
