@@ -81,18 +81,20 @@ e. Sistema notifica a ambos usuarios para coordinar intercambio físico
 
 4. **Endpoints Críticos**:
    - Auth
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| POST   | /api/auth | Registrar usuario nuevo |
-| GET    | /api/register | Registar usuario |
+     
+   | Método | Endpoint | Descripción |
+   |--------|----------|-------------|
+   | POST   | /api/auth | Registrar usuario nuevo |
+   | GET    | /api/register | Registar usuario |
 
    - Book
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| POST   | /api/books | Registrar libro |
-| GET    | /api/books?tag=accion | Buscar por tag |
-| POST   | /api/transactions | Crear oferta de intercambio |
-| PATCH  | /api/transactions/{id} | Aceptar/rechazar oferta |
+     
+   | Método | Endpoint | Descripción |
+   |--------|----------|-------------|
+   | POST   | /api/books | Registrar libro |
+   | GET    | /api/books?tag=accion | Buscar por tag |
+   | POST   | /api/transactions | Crear oferta de intercambio |
+   | PATCH  | /api/transactions/{id} | Aceptar/rechazar oferta |
 
 ---
 
