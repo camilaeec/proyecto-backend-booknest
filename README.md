@@ -91,7 +91,7 @@ e. Sistema notifica a ambos usuarios para coordinar intercambio físico
 
 ## Modelo de Entidades
 
-- **Diagrama**: inserta tu imagen E-R o diagrama de clases (con Markdown: `![E-R Diagram](ruta/diagrama.png)`).  
+- **Diagrama**: inserta tu imagen E-R o diagrama de clases (con Markdown: `![E-R Diagram](src/main/resources/images/booknest_db.png)`).  
 
 - **Relaciones Clave**:  
 
