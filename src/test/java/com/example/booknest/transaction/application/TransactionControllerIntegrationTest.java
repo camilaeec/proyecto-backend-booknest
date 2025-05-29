@@ -7,7 +7,7 @@ import com.example.booknest.transaction.domain.TransactionService;
 import com.example.booknest.transaction.dto.TransactionRequestDTO;
 import com.example.booknest.transaction.dto.TransactionResponseDTO;
 import com.example.booknest.user.domain.User;
-import com.example.booknest.user.domain.UserService;
+import com.example.booknest.user.infraestructure.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ public class TransactionControllerIntegrationTest {
     private TransactionService transactionService;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
     private BookRepository bookRepository;
@@ -55,28 +55,34 @@ public class TransactionControllerIntegrationTest {
         buyer.setNickname("buyer1");
         buyer.setEmail("buyer@example.com");
         buyer.setPassword("password");
-        userService.save(buyer);
+        buyer.setName("Buyer");
+        buyer.setLastname("Test");
+        buyer.setPhoneNumber("123456789");
+        buyer = userRepository.save(buyer);
 
         seller = new User();
         seller.setNickname("seller1");
         seller.setEmail("seller@example.com");
         seller.setPassword("password");
-        userService.save(seller);
+        seller.setName("Seller");
+        seller.setLastname("Test");
+        seller.setPhoneNumber("987654321");
+        seller = userRepository.save(seller);
 
         // Crear y guardar libros
         bookWanted = new Book();
         bookWanted.setTitle("Libro deseado");
         bookWanted.setUser(seller);
-        bookRepository.save(bookWanted);
+        bookWanted = bookRepository.save(bookWanted);
 
         bookOffered = new Book();
         bookOffered.setTitle("Libro ofrecido");
         bookOffered.setUser(buyer);
-        bookRepository.save(bookOffered);
+        bookOffered = bookRepository.save(bookOffered);
     }
 
     @Test
-    @WithMockUser(username = "buyer1")
+    @WithMockUser(username = "buyer@example.com")
     void createExchangeTransaction_ShouldReturnCreated() throws Exception {
         TransactionRequestDTO requestDTO = new TransactionRequestDTO();
         requestDTO.setBookId(bookWanted.getIdBook());
