@@ -100,8 +100,7 @@ e. Sistema notifica a ambos usuarios para coordinar intercambio físico
 
 ## Modelo de Entidades
 
-- **Diagrama**:  
-  ![E-R Diagram](ruta/diagrama.png)  
+- **Diagrama**:  `![E-R Diagram](src/main/resources/images/booknest_db.png)` 
 
 ---
 
