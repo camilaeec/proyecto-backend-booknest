@@ -100,32 +100,84 @@ e. Sistema notifica a ambos usuarios para coordinar intercambio físico
 
 ## Modelo de Entidades
 
-- **Diagrama**: inserta tu imagen E-R o diagrama de clases (con Markdown: `![E-R Diagram](ruta/diagrama.png)`).  
+- **Diagrama**:  
+  ![E-R Diagram](ruta/diagrama.png)  
 
-- **Relaciones Clave**:  
+---
 
-   - Un Usuario puede tener múltiples Libros registrados  
-   - Cada Transacción conecta exactamente 2 Libros (ofrecido y solicitado)  
-   - Los Libros pueden estar asociados a múltiples tags
+### Relaciones Clave
 
-- **Descripción de Entidades**: por cada entidad, indica atributos clave y relaciones.  
+- Un Usuario puede registrar múltiples Libros  
+- Un Usuario puede participar en múltiples Transacciones, ya sea como comprador o vendedor  
+- Una Transacción conecta dos Libros (uno ofrecido y uno solicitado)  
+- Cada Libro puede tener múltiples tags y autores  
+- Un Usuario puede escribir múltiples Reseñas y también recibirlas  
+- Una Reseña está asociada a una Transacción específica
 
-Atributos clave:
-User:
-id: Identificador único
-email: Correo institucional (@utec.edu.pe)
-role: ADMIN o USER
-dateOfRegistration: Fecha de registro
-OneToMany Transaction (como comprador)
-OneToMany Transaction (como vendedor)
+---
 
-Book:
-Transaction:
-status: PENDING/ACCEPTED/REJECTED
-creationDate: Fecha de creación
-decisionDate: Fecha de aceptación/rechazo
+### Descripción de Entidades
 
-Review:
+#### 🧑‍💼 User
+- id: Identificador único  
+- email: Correo institucional (@utec.edu.pe)  
+- nickname: Apodo único del usuario  
+- name, lastname: Nombres y apellidos  
+- password: Contraseña cifrada  
+- phoneNumber: Teléfono de contacto  
+- role: ADMIN o USER  
+- dateOfRegistration: Fecha de registro  
+
+🔗 Relaciones:
+- OneToMany Book: libros registrados por el usuario  
+- OneToMany Transaction (buyer): como comprador  
+- OneToMany Transaction (seller): como vendedor  
+- OneToMany Review (reviewerUser): reseñas que ha escrito  
+- OneToMany Review (reviewedUser): reseñas que ha recibido  
+
+---
+
+#### 📚 Book
+- idBook: Identificador del libro  
+- title: Título  
+- authors: Lista de autores  
+- tags: Lista de etiquetas/temas  
+- publisher: Editorial  
+- yearOfPublication: Año de publicación  
+- state: Estado del libro (ej. nuevo, usado)  
+- bookPhotos: Rutas de las imágenes del libro  
+
+🔗 Relaciones:
+- ManyToOne User: usuario que registra el libro  
+- OneToOne Transaction: transacción asociada (si está en proceso)  
+
+---
+
+#### 🔁 Transaction
+- idTransaction: Identificador de la transacción  
+- date: Fecha de creación  
+- accepted: Estado de aceptación (null si está pendiente)  
+
+🔗 Relaciones:
+- ManyToOne User (buyer): usuario que solicita el libro  
+- ManyToOne User (seller): usuario que ofrece el libro  
+- OneToOne Book (book): libro ofrecido  
+- OneToOne Book (offeredBook): libro ofrecido como intercambio  
+- OneToMany Review: reseñas que refieren a esta transacción  
+
+---
+
+#### 📝 Review
+- idReview: Identificador único  
+- rating: Puntuación (1-5)  
+- comment: Comentario (máx. 500 caracteres)  
+- reviewDate: Fecha de publicación de la reseña  
+
+🔗 Relaciones:
+- ManyToOne User (reviewerUser): autor de la reseña  
+- ManyToOne User (reviewedUser): destinatario de la reseña  
+- ManyToOne Transaction: transacción asociada a la reseña  
+
 ---
 
 ## Testing y Manejo de Errores
