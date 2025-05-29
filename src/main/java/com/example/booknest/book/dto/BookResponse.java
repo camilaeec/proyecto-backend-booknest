@@ -1,6 +1,6 @@
 package com.example.booknest.book.dto;
 
-import com.example.booknest.user.dto.UseResponseForOtherUsersDTO;
+import com.example.booknest.user.dto.UserResponseForOtherUsersDTO;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
@@ -19,5 +19,5 @@ public class BookResponse {
     private List<String> bookPhotos;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private UseResponseForOtherUsersDTO owner;
+    private UserResponseForOtherUsersDTO owner;
 }

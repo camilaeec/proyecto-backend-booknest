@@ -1,22 +1,17 @@
 package com.example.booknest.user.application;
 
 import com.example.booknest.book.domain.Book;
-import com.example.booknest.user.domain.User;
 import com.example.booknest.user.domain.UserService;
-import com.example.booknest.user.dto.UseResponseForOtherUsersDTO;
+import com.example.booknest.user.dto.UserResponseForOtherUsersDTO;
 import com.example.booknest.user.dto.UserRequestDTO;
 import com.example.booknest.user.dto.UserResponseDTO;
-import com.example.booknest.user.infraestructure.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -37,14 +32,14 @@ public class UserController {
     }
 
     @GetMapping("/getByEmail/email/{email}")
-    public ResponseEntity<UseResponseForOtherUsersDTO> getByEmail(@PathVariable String email){
-        UseResponseForOtherUsersDTO userResponseDTO = userService.getUserByEmail(email);
+    public ResponseEntity<UserResponseForOtherUsersDTO> getByEmail(@PathVariable String email){
+        UserResponseForOtherUsersDTO userResponseDTO = userService.getUserByEmail(email);
         return ResponseEntity.status(HttpStatus.OK).body(userResponseDTO);
     }
 
     @GetMapping("/getById/id/{id}")
-    public ResponseEntity<UseResponseForOtherUsersDTO> getById(@PathVariable Long id){
-        UseResponseForOtherUsersDTO userResponseDTO = userService.getUserById(id);
+    public ResponseEntity<UserResponseForOtherUsersDTO> getById(@PathVariable Long id){
+        UserResponseForOtherUsersDTO userResponseDTO = userService.getUserById(id);
         return ResponseEntity.status(HttpStatus.OK).body(userResponseDTO);
     }
 
