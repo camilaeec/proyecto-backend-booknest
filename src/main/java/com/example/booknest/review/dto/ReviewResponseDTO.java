@@ -9,8 +9,9 @@ import java.time.LocalDate;
 @Setter
 public class ReviewResponseDTO {
     private Long idReview;
-//    private UseResponseForOtherUsersDTO reviewerUser;
-//    private UseResponseForOtherUsersDTO reviewedUser;
+    private String reviewerNickname;
+    private String reviewedNickname;
+    private Long transactionId;
     private Integer rating;
     private String comment;
     private LocalDate reviewDate;

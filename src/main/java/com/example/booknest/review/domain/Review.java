@@ -1,5 +1,6 @@
 package com.example.booknest.review.domain;
 
+import com.example.booknest.transaction.domain.Transaction;
 import com.example.booknest.user.domain.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -17,7 +18,6 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idReview;
 
-    @Column(nullable = false)
     @Min(1)
     @Max(5)
     private Integer rating;
@@ -29,11 +29,13 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "reviewer_user_id", nullable = false)
-    @JsonBackReference("user-reviews")
     private User reviewerUser;
 
     @ManyToOne
     @JoinColumn(name = "reviewed_user_id", nullable = false)
-    @JsonBackReference("user-reviewed")
     private User reviewedUser;
+
+    @ManyToOne
+    @JoinColumn(name = "transaction_id", nullable = false)
+    private Transaction transaction;
 }

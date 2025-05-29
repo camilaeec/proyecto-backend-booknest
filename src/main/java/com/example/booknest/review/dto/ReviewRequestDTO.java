@@ -10,11 +10,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReviewRequestDTO {
-    @NotNull(message = "El ID del revisor es obligatorio")
-    private Long reviewerUserId;
+    @NotNull(message = "El nickname del revisor es obligatorio")
+    private String reviewerNickname;
 
-    @NotNull(message = "El ID del calificado es obligatorio")
-    private Long reviewedUserId;
+    @NotNull(message = "El nickname del reseñado es obligatorio")
+    private String reviewedNickname;
+
+    @NotNull(message = "El ID de transacción es obligatorio")
+    private Long transactionId;
 
     @Min(1)
     @Max(5)
