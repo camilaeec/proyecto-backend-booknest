@@ -1,6 +1,6 @@
-# Portada
+# BookNest 
+_Plataforma de Intercambio de Libros para Universitarios_ 
 
-**Título del Proyecto**: _BookNest_ - Plataforma de Intercambio de Libros Universitarios 
 **Curso**: CS 2031 Desarrollo Basado en Plataforma  
 **Integrantes**:  
 - Espinoza Cabrera, Camila Del Rosario
