@@ -123,4 +123,7 @@ public class UserService {
 
         return bookRepository.findByUser(user);
     }
+
+    public void save(User seller) {
+    }
 }
