@@ -3,7 +3,7 @@ package com.example.booknest.user.dto;
 import lombok.Data;
 
 @Data
-public class UseResponseForOtherUsersDTO {
+public class UserResponseForOtherUsersDTO {
     private Long id;
     private String nickname;
 }
