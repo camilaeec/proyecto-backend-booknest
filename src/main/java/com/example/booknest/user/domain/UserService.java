@@ -5,7 +5,7 @@ import com.example.booknest.book.infraestructure.BookRepository;
 import com.example.booknest.exception.ResourceAlreadyExists;
 import com.example.booknest.exception.ResourceNotFoundException;
 import com.example.booknest.exception.UserMustBeAuthenticatedException;
-import com.example.booknest.user.dto.UseResponseForOtherUsersDTO;
+import com.example.booknest.user.dto.UserResponseForOtherUsersDTO;
 import com.example.booknest.user.dto.UserRequestDTO;
 import com.example.booknest.user.dto.UserResponseDTO;
 import com.example.booknest.user.infraestructure.UserRepository;
@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -91,14 +90,14 @@ public class UserService {
         return modelMapper.map(user, UserResponseDTO.class);
     }
 
-    public UseResponseForOtherUsersDTO getUserByEmail(String email){
+    public UserResponseForOtherUsersDTO getUserByEmail(String email){
         User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        return modelMapper.map(user, UseResponseForOtherUsersDTO.class);
+        return modelMapper.map(user, UserResponseForOtherUsersDTO.class);
     }
 
-    public UseResponseForOtherUsersDTO getUserById(Long id){
+    public UserResponseForOtherUsersDTO getUserById(Long id){
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        return modelMapper.map(user, UseResponseForOtherUsersDTO.class);
+        return modelMapper.map(user, UserResponseForOtherUsersDTO.class);
     }
 
     public void deleteUserByEmail(String email){
