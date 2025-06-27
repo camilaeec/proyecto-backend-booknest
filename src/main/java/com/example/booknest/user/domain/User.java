@@ -5,8 +5,6 @@ import com.example.booknest.review.domain.Review;
 import com.example.booknest.transaction.domain.Transaction;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -67,11 +65,11 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List<Transaction> sales;
 
-    @OneToMany(mappedBy = "reviewerUser")
+    @OneToMany(mappedBy = "reviewer")
     @JsonManagedReference
     private List<Review> reviews;
 
-    @OneToMany(mappedBy = "reviewedUser")
+    @OneToMany(mappedBy = "reviewed")
     @JsonManagedReference
     private List<Review> reviewsReceived;
 

@@ -1,0 +1,460 @@
+{
+	"info": {
+		"_postman_id": "ba7c3327-7e9b-4d8d-b6ce-6e6a032167b1",
+		"name": "BookNest Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37735224",
+		"_collection_link": "https://booknest-8467.postman.co/workspace/BookNest-Workspace~4a9c6696-2167-40ee-9224-fa31d6757cbd/collection/37735224-ba7c3327-7e9b-4d8d-b6ce-6e6a032167b1?action=share&source=collection_link&creator=37735224"
+	},
+	"item": [
+		{
+			"name": "Register User 1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nickname\": \"Cami\",\r\n    \"name\": \"Camila\",\r\n    \"password\": \"1234\",\r\n    \"email\": \"camila.espinoza@utec.edu.pe\",\r\n    \"lastname\": \"Espinoza\",\r\n    \"location\": \"abc\",\r\n    \"phoneNumber\": \"910860218\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register User 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nickname\": \"usuario\",\r\n    \"name\": \"Gabriel\",\r\n    \"password\": \"1234\",\r\n    \"email\": \"gabriel.frisancho@utec.edu.pe\",\r\n    \"lastname\": \"Frisancho\",\r\n    \"phoneNumber\": \"910860218\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "jwt",
+					"jwt": [
+						{
+							"key": "payload",
+							"value": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnYWJyaWVsLmZyaXNhbmNob0B1dGVjLmVkdS5wZSIsImVtYWlsIjoiZ2FicmllbC5mcmlzYW5jaG9AdXRlYy5lZHUucGUiLCJyb2xlIjoiQ09NTU9OX1VTRVIiLCJpYXQiOjE3NDgzODI5MzksImV4cCI6MTc0ODQ2OTMzOX0.PjAxlXDrdcZ0a0_8ezTHDdL2azxgWcZQez7F34uYQ_8\"\r\n}",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "HS256",
+							"type": "string"
+						},
+						{
+							"key": "isSecretBase64Encoded",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "headerPrefix",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "queryParamKey",
+							"value": "token",
+							"type": "string"
+						},
+						{
+							"key": "header",
+							"value": "{}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\": \"1234\",\r\n    \"email\": \"camila.espinoza@utec.edu.pe\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Book 1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGEuZXNwaW5vemFAdXRlYy5lZHUucGUiLCJlbWFpbCI6ImNhbWlsYS5lc3Bpbm96YUB1dGVjLmVkdS5wZSIsInJvbGUiOiJDT01NT05fVVNFUiIsImlhdCI6MTc1MDg2NTE4MCwiZXhwIjoxNzUwOTUxNTgwfQ.as6BnTcxsT4IkuKdrvKw_-OIqCaTP4HxCG6kR2xV4Dk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"The Catcher in the Rye\",\r\n  \"authors\": [\"J. D. Salingger\"],\r\n  \"tags\": [\"novel\", \"classic\"],\r\n  \"publisher\": \"Little, Brown and Company\",\r\n  \"yearOfPublication\": \"1951\",\r\n  \"state\": \"Buen estado\",\r\n  \"price\": 30.0,\r\n  \"exchange\": false,\r\n  \"bookPhotos\": [\"photo1.jpg\"]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/books",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Book 2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnYWJyaWVsLmZyaXNhbmNob0B1dGVjLmVkdS5wZSIsImVtYWlsIjoiZ2FicmllbC5mcmlzYW5jaG9AdXRlYy5lZHUucGUiLCJyb2xlIjoiQ09NTU9OX1VTRVIiLCJpYXQiOjE3NTA4NjUxODYsImV4cCI6MTc1MDk1MTU4Nn0.1ADXodgyJ8fsHDPhYlXiylANP198lN0cLlWXr3Biw8A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"The Catcher in the Rye\",\r\n  \"authors\": [\"J. D. Salingger\"],\r\n  \"tags\": [\"novel\", \"classic\"],\r\n  \"publisher\": \"Little, Brown and Company\",\r\n  \"yearOfPublication\": \"1951\",\r\n  \"state\": \"Buen estado\",\r\n  \"price\": 30.0,\r\n  \"exchange\": false,\r\n  \"bookPhotos\": [\"photo1.jpg\"]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/books",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Book by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnYWJyaWVsLmZyaXNhbmNob0B1dGVjLmVkdS5wZSIsImVtYWlsIjoiZ2FicmllbC5mcmlzYW5jaG9AdXRlYy5lZHUucGUiLCJyb2xlIjoiQ09NTU9OX1VTRVIiLCJpYXQiOjE3NTA4NjUxODYsImV4cCI6MTc1MDk1MTU4Nn0.1ADXodgyJ8fsHDPhYlXiylANP198lN0cLlWXr3Biw8A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/books/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Transaction",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGEuZXNwaW5vemFAdXRlYy5lZHUucGUiLCJlbWFpbCI6ImNhbWlsYS5lc3Bpbm96YUB1dGVjLmVkdS5wZSIsInJvbGUiOiJDT01NT05fVVNFUiIsImlhdCI6MTc1MDg2NTE4MCwiZXhwIjoxNzUwOTUxNTgwfQ.as6BnTcxsT4IkuKdrvKw_-OIqCaTP4HxCG6kR2xV4Dk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sellerNickname\": \"Cami\",\r\n    \"bookId\": 2,\r\n    \"offeredBookId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transactions/exchange",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transactions",
+						"exchange"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Transaction by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGEuZXNwaW5vemFAdXRlYy5lZHUucGUiLCJlbWFpbCI6ImNhbWlsYS5lc3Bpbm96YUB1dGVjLmVkdS5wZSIsInJvbGUiOiJDT01NT05fVVNFUiIsImlhdCI6MTc1MDg2NTE4MCwiZXhwIjoxNzUwOTUxNTgwfQ.as6BnTcxsT4IkuKdrvKw_-OIqCaTP4HxCG6kR2xV4Dk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/transactions/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transactions",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Review 1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGEuZXNwaW5vemFAdXRlYy5lZHUucGUiLCJlbWFpbCI6ImNhbWlsYS5lc3Bpbm96YUB1dGVjLmVkdS5wZSIsInJvbGUiOiJDT01NT05fVVNFUiIsImlhdCI6MTc1MDg2NTE4MCwiZXhwIjoxNzUwOTUxNTgwfQ.as6BnTcxsT4IkuKdrvKw_-OIqCaTP4HxCG6kR2xV4Dk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reviewerNickname\": \"Cami\",\r\n    \"reviewedNickname\": \"usuario\",\r\n    \"transactionId\": 1,\r\n    \"rating\": 5,\r\n    \"comment\": \"Excelente servicio, libro en perfecto estado\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Review 2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGEuZXNwaW5vemFAdXRlYy5lZHUucGUiLCJlbWFpbCI6ImNhbWlsYS5lc3Bpbm96YUB1dGVjLmVkdS5wZSIsInJvbGUiOiJDT01NT05fVVNFUiIsImlhdCI6MTc1MDg5MDY0OSwiZXhwIjoxNzUwOTc3MDQ5fQ.irrIlA4_crug3SxypgTr9-Ql4slog1D1sfSGSsivRjg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reviewerNickname\": \"usuario\",\r\n    \"reviewedNickname\": \"Cami\",\r\n    \"transactionId\": 1,\r\n    \"rating\": 4,\r\n    \"comment\": \"Puntual y buen trato\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reviews"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Reviews by Nickname 1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGEuZXNwaW5vemFAdXRlYy5lZHUucGUiLCJlbWFpbCI6ImNhbWlsYS5lc3Bpbm96YUB1dGVjLmVkdS5wZSIsInJvbGUiOiJDT01NT05fVVNFUiIsImlhdCI6MTc1MDg5MDY0OSwiZXhwIjoxNzUwOTc3MDQ5fQ.irrIlA4_crug3SxypgTr9-Ql4slog1D1sfSGSsivRjg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/reviews/user/Cami",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reviews",
+						"user",
+						"Cami"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Reviews by Nickname 2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjYW1pbGEuZXNwaW5vemFAdXRlYy5lZHUucGUiLCJlbWFpbCI6ImNhbWlsYS5lc3Bpbm96YUB1dGVjLmVkdS5wZSIsInJvbGUiOiJDT01NT05fVVNFUiIsImlhdCI6MTc1MDg5MDY0OSwiZXhwIjoxNzUwOTc3MDQ5fQ.irrIlA4_crug3SxypgTr9-Ql4slog1D1sfSGSsivRjg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/reviews/user/usuario",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reviews",
+						"user",
+						"usuario"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "tokenU1",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "tokenU2",
+			"value": "",
+			"type": "default"
+		}
+	]
+}

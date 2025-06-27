@@ -23,10 +23,12 @@ public class ReviewService {
     private final ModelMapper modelMapper;
 
     public ReviewResponseDTO createReview(ReviewRequestDTO request) {
-        User reviewer = userRepository.findByNickname(request.getReviewerNickname())
+        String reviewerNick = request.getReviewerNickname().trim().toLowerCase();
+        String reviewedNick = request.getReviewedNickname().trim().toLowerCase();
+        User reviewer = userRepository.findByNicknameIgnoreCase(reviewerNick)
                 .orElseThrow(() -> new ResourceNotFoundException("Reviewer no encontrado"));
 
-        User reviewed = userRepository.findByNickname(request.getReviewedNickname())
+        User reviewed = userRepository.findByNicknameIgnoreCase(reviewedNick)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario reseñado no encontrado"));
 
         Transaction transaction = transactionRepository.findById(request.getTransactionId())
@@ -44,31 +46,23 @@ public class ReviewService {
             throw new IllegalStateException("No puedes reseñarte a ti mismo");
         }
 
-        if (reviewRepository.existsByReviewerUserAndTransaction(reviewer, transaction)) {
+        if (reviewRepository.existsByReviewerAndTransaction(reviewer, transaction)) {
             throw new IllegalStateException("Ya has reseñado esta transacción");
         }
 
         Review review = new Review();
         review.setRating(request.getRating());
         review.setComment(request.getComment());
-        review.setReviewerUser(reviewer);
-        review.setReviewedUser(reviewed);
+        review.setReviewer(reviewer);
+        review.setReviewed(reviewed);
         review.setTransaction(transaction);
 
         Review savedReview = reviewRepository.save(review);
         return convertToDTO(savedReview);
     }
 
-    private ReviewResponseDTO convertToDTO(Review review) {
-        ReviewResponseDTO dto = new ReviewResponseDTO();
-        dto.setIdReview(review.getIdReview());
-        dto.setRating(review.getRating());
-        dto.setComment(review.getComment());
-        dto.setReviewDate(review.getReviewDate());
-        dto.setReviewerNickname(review.getReviewerUser().getNickname());
-        dto.setReviewedNickname(review.getReviewedUser().getNickname());
-        dto.setTransactionId(review.getTransaction().getIdTransaction());
-        return dto;
+    public ReviewResponseDTO convertToDTO(Review review) {
+        return modelMapper.map(review, ReviewResponseDTO.class);
     }
 
     public void deleteReview(Long id) {
@@ -79,9 +73,8 @@ public class ReviewService {
     }
 
     public List<ReviewResponseDTO> getReviewsByUser(String nickname) {
-        return reviewRepository.findByReviewedUserNickname(nickname).stream()
-                .map(this::convertToDTO)
-                .toList();
+        return reviewRepository.findByReviewedUserNickname(nickname)
+                .stream().map(this::convertToDTO).toList();
     }
 
     public ReviewResponseDTO getReviewById(Long id) {

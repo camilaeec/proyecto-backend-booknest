@@ -41,7 +41,7 @@ public class AuthService {
         }
         User user = new User();
         user.setEmail(registerDTO.getEmail());
-        if(userRepository.findByNickname(registerDTO.getNickname()).isPresent()){
+        if(userRepository.findByNicknameIgnoreCase(registerDTO.getNickname()).isPresent()){
             throw new ResourceAlreadyExists("User with that nickname already exists");
         }
         user.setNickname(registerDTO.getNickname());

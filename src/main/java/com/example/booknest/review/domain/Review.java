@@ -28,12 +28,12 @@ public class Review {
     private LocalDate reviewDate = LocalDate.now();
 
     @ManyToOne
-    @JoinColumn(name = "reviewer_user_id", nullable = false)
-    private User reviewerUser;
+    @JoinColumn(name = "reviewer_user_id")
+    private User reviewer;
 
     @ManyToOne
-    @JoinColumn(name = "reviewed_user_id", nullable = false)
-    private User reviewedUser;
+    @JoinColumn(name = "reviewed_user_id")
+    private User reviewed;
 
     @ManyToOne
     @JoinColumn(name = "transaction_id", nullable = false)

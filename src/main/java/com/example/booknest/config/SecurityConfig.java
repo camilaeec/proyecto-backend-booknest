@@ -25,17 +25,18 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/auth/login", "/auth/register").permitAll()
+                        .requestMatchers("/auth/me").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
     @Bean
     static RoleHierarchy roleHierarchy(){
         RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
@@ -53,15 +54,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public WebMvcConfigurer corsMappingConfigurer(){
-        return new WebMvcConfigurer(){
+    public WebMvcConfigurer corsMappingConfigurer() {
+        return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry){
+            public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("*")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH")
+                        .allowedOrigins("http://localhost:5173")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowCredentials(false)
+                        .exposedHeaders("Authorization")
+                        .allowCredentials(true)
                         .maxAge(3600);
             }
         };

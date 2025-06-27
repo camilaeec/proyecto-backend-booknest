@@ -5,6 +5,8 @@ import com.example.booknest.review.dto.ReviewRequestDTO;
 import com.example.booknest.review.dto.ReviewResponseDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequestMapping("/reviews")
 @RequiredArgsConstructor
 public class ReviewController {
+    private static final Logger log = LoggerFactory.getLogger(ReviewController.class);
 
     private final ReviewService reviewService;
 
@@ -23,6 +26,10 @@ public class ReviewController {
     @PreAuthorize("hasRole('COMMON_USER')")
     public ResponseEntity<ReviewResponseDTO> createReview(
             @Valid @RequestBody ReviewRequestDTO request) {
+
+        log.info(">>>> Llegó petición a /reviews");
+        log.debug("Datos recibidos: {}", request);
+
         ReviewResponseDTO createdReview = reviewService.createReview(request);
         return new ResponseEntity<>(createdReview, HttpStatus.CREATED);
     }
