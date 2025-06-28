@@ -1,21 +1,40 @@
 package com.example.booknest.book.application;
 
+import com.example.booknest.book.domain.Book;
 import com.example.booknest.book.domain.BookService;
 import com.example.booknest.book.dto.*;
+import com.example.booknest.book.infraestructure.BookRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/books")
 public class BookController {
     private final BookService bookService;
+    private final BookRepository bookRepository;
+    private final ModelMapper modelMapper;
+
+    @GetMapping("/recent")
+    public ResponseEntity<List<BookResponse>> getRecentBooks() {
+        Pageable topFive = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "createdAt"));
+        List<Book> recentBooks = bookRepository.findAll(topFive).getContent();
+
+        return ResponseEntity.ok(recentBooks.stream()
+                .map(book -> modelMapper.map(book, BookResponse.class))
+                .collect(Collectors.toList()));
+    }
 
     // ====================== CREAR LIBRO ======================
     @PostMapping

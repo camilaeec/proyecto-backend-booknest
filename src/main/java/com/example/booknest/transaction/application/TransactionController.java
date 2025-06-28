@@ -4,6 +4,7 @@ import com.example.booknest.transaction.domain.Transaction;
 import com.example.booknest.transaction.domain.TransactionService;
 import com.example.booknest.transaction.dto.TransactionRequestDTO;
 import com.example.booknest.transaction.dto.TransactionResponseDTO;
+import com.example.booknest.transaction.dto.TransactionStatsDTO;
 import com.example.booknest.user.domain.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +19,12 @@ import java.util.List;
 public class TransactionController {
 
     private final TransactionService transactionService;
+
+    @PreAuthorize("hasRole('COMMON_USER')")
+    @GetMapping("/stats")
+    public ResponseEntity<TransactionStatsDTO> getTransactionStats() {
+        return ResponseEntity.ok(transactionService.getTransactionStats());
+    }
 
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;

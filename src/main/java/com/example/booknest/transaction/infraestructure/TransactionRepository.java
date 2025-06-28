@@ -18,6 +18,10 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findByBuyer_Id(Long buyerId);
     List<Transaction> findBySeller_Id(Long sellerId);
 
+    long countByAcceptedIsNull();
+    long countByAcceptedTrue();
+    long countByAcceptedFalse();
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Transaction t WHERE t.book.idBook = :bookId AND t.idTransaction != :transactionId")

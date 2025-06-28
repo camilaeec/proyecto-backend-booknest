@@ -6,6 +6,7 @@ import com.example.booknest.book.infraestructure.BookRepository;
 import com.example.booknest.exception.ResourceNotFoundException;
 import com.example.booknest.transaction.dto.TransactionRequestDTO;
 import com.example.booknest.transaction.dto.TransactionResponseDTO;
+import com.example.booknest.transaction.dto.TransactionStatsDTO;
 import com.example.booknest.transaction.infraestructure.TransactionRepository;
 import com.example.booknest.user.domain.User;
 import com.example.booknest.user.domain.UserService;
@@ -141,6 +142,15 @@ public class TransactionService {
     public TransactionResponseDTO getTransactionById(long id) {
         Transaction transaction = transactionRepository.findById(id);
         return convertToResponseDTO(transaction);
+    }
+
+    public TransactionStatsDTO getTransactionStats() {
+        long total = transactionRepository.count();
+        long pending = transactionRepository.countByAcceptedIsNull();
+        long completed = transactionRepository.countByAcceptedTrue();
+        long rejected = transactionRepository.countByAcceptedFalse();
+
+        return new TransactionStatsDTO(total, pending, completed, rejected);
     }
 
     @Transactional

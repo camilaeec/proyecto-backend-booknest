@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -31,6 +32,15 @@ public class Book {
     private String yearOfPublication;
 
     private String state;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+    }
 
     @ElementCollection
     private List<String> bookPhotos; //guarda las rutas de las fotos
