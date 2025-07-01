@@ -16,8 +16,5 @@ public class BookResponse {
     private String publisher;
     private String yearOfPublication;
     private String state;
-    private List<String> bookPhotos;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
     private UserResponseForOtherUsersDTO owner;
 }

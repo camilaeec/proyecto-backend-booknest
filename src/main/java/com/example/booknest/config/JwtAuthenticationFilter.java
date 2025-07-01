@@ -20,22 +20,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException{
-        String authHeader = request.getHeader("Authorization");
-        if(!StringUtils.hasText(authHeader) || !StringUtils.startsWithIgnoreCase(authHeader, "Bearer")){
-            filterChain.doFilter(request, response);
-            return;
-        }
-        String jwt = authHeader.substring(7);
-        String userEmail = jwtService.extractUsername(jwt);
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException{
 
         try {
-            if(StringUtils.hasText(userEmail) && SecurityContextHolder.getContext().getAuthentication() == null){
+            String authHeader = request.getHeader("Authorization");
+            if(!StringUtils.hasText(authHeader) || !authHeader.startsWith("Bearer ")){
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            String jwt = authHeader.substring(7);
+            String userEmail = jwtService.extractUsername(jwt);
+
+            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
                 jwtService.validateToken(jwt, userEmail);
             }
             filterChain.doFilter(request, response);
         }catch (JWTVerificationException e){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
             response.getWriter().write("Invalid or expired token");
         }
     }

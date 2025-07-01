@@ -3,6 +3,7 @@ package com.example.booknest.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -25,17 +26,24 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        return http
+        http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        // permitir login / registro
                         .requestMatchers("/auth/login", "/auth/register").permitAll()
-                        .requestMatchers("/auth/me").authenticated()
+
+                        // permitir GET de libros (público)
+                        .requestMatchers(HttpMethod.GET, "/books/**").permitAll()
+
+                        // **proteger POST /books para usuarios comunes o admin**
+                        .requestMatchers(HttpMethod.POST, "/books").hasAnyRole("COMMON_USER","ADMIN")
+
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
     }
     @Bean
     static RoleHierarchy roleHierarchy(){

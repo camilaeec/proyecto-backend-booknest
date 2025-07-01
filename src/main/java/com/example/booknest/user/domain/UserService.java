@@ -33,18 +33,21 @@ public class UserService {
         return userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
-    public User getMeLocal(){ // Solo se usa para funciones dentro del backend
+    public User getMeLocal() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth == null || !auth.isAuthenticated()){
+        if (auth == null || !auth.isAuthenticated()) {
             throw new UserMustBeAuthenticatedException("User is not authenticated");
         }
         Object principal = auth.getPrincipal();
-        if(principal instanceof User user){
-            return user;
-        }else{
+        if (principal instanceof UserDetails userDetails) {
+            // Buscar en la base de datos con el email (username)
+            return userRepository.findByEmail(userDetails.getUsername())
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        } else {
             throw new ResourceNotFoundException("Invalid User");
         }
     }
+
 
     public UserResponseDTO getMe(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

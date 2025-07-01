@@ -24,7 +24,4 @@ public class UpdateBookRequest {
 
     @NotBlank(message = "El estado del libro es obligatorio")
     private String state;
-
-    @NotEmpty(message = "Debe subir al menos una foto")
-    private List<@NotBlank String> bookPhotos;
 }
